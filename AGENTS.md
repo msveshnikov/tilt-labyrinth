@@ -25,6 +25,7 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 - `scripts/level_loader.gd` counts `levels/level_NN.json` files on its own, so a new file just shows up in the game.
 - `scripts/autoload/`: `settings.gd` (user settings), `tilt_input.gd` (sensor, browser and keyboard input, calibration), `sfx.gd`, `progress.gd` (unlocks and stars).
 - `scripts/ui/`: `screens.gd` (menus, level select, a 5-column grid), `hud.gd`, `touch_joystick.gd`, `ui_theme.gd`, `star_row.gd`.
+- `Screens._root` must stay `MOUSE_FILTER_IGNORE`. It sits on layer 10 over the HUD, and if it blocks the mouse, the in-game buttons stop working.
 - UI text is in Russian, and code comments are in English.
 
 ## Levels
@@ -46,6 +47,7 @@ scp build/web/* build/android/TiltLabyrinth.apk ubuntu@severance.lol:/var/www/se
 
 - The Android build is debug-signed (no release keystore), arm64 only.
 - **Android tilt:** `project.godot` must keep `input_devices/sensors/enable_accelerometer` / `enable_gravity` / `enable_gyroscope = true`. Godot 4.3+ disables the sensors on Android by default, and the APK then reads zero tilt. No runtime permission is needed.
+- **Web PWA cache:** the export has a service worker (`progressive_web_app/enabled=true`). After a deploy, browsers run the old build once and switch to the new one on the next load. To test a deploy right away, unregister the service worker and clear `caches` in DevTools first.
 - **Web tilt** needs HTTPS. iOS also needs the in-page permission prompt, which `tilt_input.gd` handles through `JavaScriptBridge`.
 
 ## Conventions

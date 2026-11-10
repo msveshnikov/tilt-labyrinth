@@ -21,6 +21,9 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	# Pass clicks through when no screen is open, so the HUD buttons underneath
+	# work. Open screens still block input with their full-rect shade.
+	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.theme = UiTheme.get_theme()
 	add_child(_root)
 
