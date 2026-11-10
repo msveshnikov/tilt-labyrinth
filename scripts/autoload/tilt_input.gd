@@ -9,7 +9,7 @@ extends Node
 ## in device coordinates (x = right edge, y = top edge, z = out of the screen).
 
 ## Phone tilt (degrees away from the calibrated pose) that gives full board tilt at sensitivity 1.
-const PHONE_FULL_TILT_DEG := 20.0
+const PHONE_FULL_TILT_DEG := 14.0
 const DEADZONE := 0.07
 ## Higher = snappier, lower = smoother.
 const SMOOTHING := 14.0

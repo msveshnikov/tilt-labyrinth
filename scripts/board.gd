@@ -10,7 +10,7 @@ const CELL := 1.0
 const FLOOR_THICKNESS := 0.4
 const WALL_HEIGHT := 0.75 # > ball diameter (0.6), so the lid never touches a ball
 ## Max board rotation speed (rad/s), so sudden input never "kicks" the balls.
-const MAX_TILT_SPEED := 1.2
+const MAX_TILT_SPEED := 2.0
 ## Invisible glass lid on top of the walls (like a handheld maze toy): balls can't fly out.
 const LID_THICKNESS := 0.5
 

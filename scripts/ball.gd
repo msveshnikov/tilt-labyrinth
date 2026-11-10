@@ -84,7 +84,7 @@ func _init() -> void:
 	mass = 0.2
 	continuous_cd = true # don't tunnel through thin walls
 	can_sleep = false # a sleeping ball would ignore the board tilting under it
-	linear_damp = 0.25
+	linear_damp = 0.15
 	angular_damp = 0.6
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	var pm := PhysicsMaterial.new()
