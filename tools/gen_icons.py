@@ -8,6 +8,7 @@ Writes:
   icons/adaptive_background.svg    Android adaptive icon, background layer (432)
   icons/adaptive_foreground.svg    Android adaptive icon, foreground layer (432)
   icons/adaptive_monochrome.svg    Android 13+ themed icon (432, alpha only)
+  icons/splash.svg                 boot splash (512, board only, on the navy boot background)
 
 The export presets point at PNG renders of these (icons/*.png). Re-render them with any
 SVG renderer after changing the art, e.g. Chromium or `rsvg-convert -w 192 icon.svg`.
@@ -201,6 +202,7 @@ def main():
                                                        '<rect width="432" height="432" fill="url(#glow)"/>'))
     (icons / "adaptive_foreground.svg").write_text(svg(432, defs() + tilted(0.47, 432)))
     (icons / "adaptive_monochrome.svg").write_text(svg(432, tilted(0.47, 432, mono=True)))
+    (icons / "splash.svg").write_text(svg(512, defs() + tilted(0.9, 512)))
     print("wrote icon.svg and icons/*.svg")
 
 

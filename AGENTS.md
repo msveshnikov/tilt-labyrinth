@@ -27,7 +27,7 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 - `scripts/ui/`: `screens.gd` (menus, level select, a 5-column grid), `hud.gd`, `touch_joystick.gd`, `ui_theme.gd`, `star_row.gd`.
 - `Screens._root` must stay `MOUSE_FILTER_IGNORE`. It sits on layer 10 over the HUD, and if it blocks the mouse, the in-game buttons stop working.
 - UI text is in Russian, and code comments are in English.
-- Icons: `python tools/gen_icons.py` writes `icon.svg` (project icon and favicon) and `icons/*.svg` (Android adaptive layers, full-bleed iOS variant). The export presets use the PNG renders in `icons/`, so re-render them after changing the art. `icons/` has a `.gdignore`, so the PNGs aren't packed into the game.
+- Icons: `python tools/gen_icons.py` writes `icon.svg` (project icon and favicon) and `icons/*.svg` (Android adaptive layers and launch splash, full-bleed iOS variant, boot splash). The export presets use the PNG renders in `icons/`, so re-render them after changing the art. `icons/` has a `.gdignore`, so the PNGs aren't packed into the game.
 
 ## Levels
 
