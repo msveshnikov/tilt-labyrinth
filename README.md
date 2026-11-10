@@ -7,7 +7,7 @@ A low-poly 3D tilt-maze puzzle in Godot 4.7 (GDScript only). You tilt the board 
 ## Features
 
 - Tilting board (AnimatableBody3D), balls are RigidBody3D with CCD, Jolt physics at 120 Hz.
-- Phone tilt: native `Input.get_gravity()` on Android; on the web it falls back to the browser's `devicemotion` / `deviceorientation` through `JavaScriptBridge`. Auto-calibration at level start, the **Калибровка** button, dead zone, smoothing, portrait lock, and a virtual joystick when there's no sensor.
+- Phone tilt: native `Input.get_gravity()` on Android; on the web it falls back to the browser's `devicemotion` / `deviceorientation` through `JavaScriptBridge`. Auto-calibration when play starts (re-level any time in Settings → **Калибровка**), dead zone, smoothing, portrait lock, and a virtual joystick when there's no sensor.
 - Coloured pockets, holes, up to 4 balls per level, stars for beating par, saved progress.
 - Menus, settings, sound and vibration.
 - **32 levels** that get harder as you go: bigger boards, more balls, more holes and fewer shortcuts.
@@ -16,7 +16,7 @@ A low-poly 3D tilt-maze puzzle in Godot 4.7 (GDScript only). You tilt the board 
 
 | Device | Tilt | Other |
 |---|---|---|
-| Phone | tilt the phone; on-screen joystick if the sensor gives no data | **Калибровка** = current pose is level, **Заново** = restart |
+| Phone | tilt the phone; on-screen joystick if the sensor gives no data | **Пауза**, **Заново** = restart, **Меню** = main menu |
 | PC | arrows / WASD, or drag with the left mouse button | `C` calibrate, `R` restart |
 
 ## Run

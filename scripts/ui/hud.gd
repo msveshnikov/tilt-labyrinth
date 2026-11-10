@@ -5,7 +5,7 @@ extends CanvasLayer
 
 signal pause_pressed
 signal restart_pressed
-signal calibrate_pressed
+signal menu_pressed
 
 const MARGIN := 20
 
@@ -51,9 +51,7 @@ func _ready() -> void:
 	bottom.add_child(buttons)
 	buttons.add_child(_button("Пауза", pause_pressed.emit))
 	buttons.add_child(_button("Заново", restart_pressed.emit))
-	buttons.add_child(_button("Калибровка", func():
-		calibrate_pressed.emit()
-		toast("Наклон выровнен")))
+	buttons.add_child(_button("Меню", menu_pressed.emit))
 
 	_toast = _label(32)
 	_toast.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)

@@ -32,7 +32,7 @@ func _ready() -> void:
 	add_child(hud)
 	hud.pause_pressed.connect(pause_game)
 	hud.restart_pressed.connect(restart_level)
-	hud.calibrate_pressed.connect(TiltInput.calibrate)
+	hud.menu_pressed.connect(show_menu)
 
 	screens = Screens.new()
 	add_child(screens)
@@ -88,7 +88,7 @@ func start_level(index: int) -> void:
 	playing = true
 	get_tree().paused = false
 	# Level the board to how the phone is held when play starts; after that only
-	# the Калибровка button changes it (no recalibration on restart / next level).
+	# Settings → Калибровка changes it (no recalibration on restart / next level).
 	if _first_play:
 		_first_play = false
 		TiltInput.calibrate()
