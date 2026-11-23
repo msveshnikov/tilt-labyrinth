@@ -82,11 +82,25 @@ func is_sensor_active() -> bool:
 	return _ever_sampled and _since_sample < SENSOR_TIMEOUT
 
 
-## Touch device whose tilt sensor gives nothing: show the on-screen joystick.
+## Phone or tablet (native or browser): the player can choose tilt or joystick.
+func has_touch() -> bool:
+	return DisplayServer.is_touchscreen_available()
+
+
+## The player picked the on-screen joystick instead of tilting the phone.
+func joystick_chosen() -> bool:
+	return Settings.control == "joystick"
+
+
+## Show the on-screen joystick: the player chose it, or the tilt sensor gives nothing.
 func wants_joystick() -> bool:
+	if not has_touch():
+		return false
+	if joystick_chosen():
+		return true
 	if is_sensor_active():
 		return false
-	return DisplayServer.is_touchscreen_available() and _elapsed > SENSOR_TIMEOUT
+	return _elapsed > SENSOR_TIMEOUT
 
 
 func vibrate(ms: int) -> void:
@@ -118,7 +132,7 @@ func _process(delta: float) -> void:
 	elif joystick_vector != Vector2.ZERO:
 		source = "джойстик"
 		target = joystick_vector
-	elif is_sensor_active() and _calibrated:
+	elif not joystick_chosen() and is_sensor_active() and _calibrated:
 		source = "наклон"
 		target = _apply_deadzone(_sensor_tilt())
 	else:

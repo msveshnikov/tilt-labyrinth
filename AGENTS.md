@@ -8,9 +8,12 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 |---|---|
 | Source code | `C:\My-progs\Godot\labyrinth` |
 | Git repo | https://github.com/msveshnikov/tilt-labyrinth (branch `main`) |
-| Live web build | https://severance.lol/2/ |
-| Android APK (download) | https://severance.lol/2/TiltLabyrinth.apk |
-| Server folder | `ubuntu@severance.lol:/var/www/severance/2/` (nginx, HTTPS) |
+| Live web build | https://maxims.top/labyrinth/ |
+| Android APK (download) | https://maxims.top/labyrinth/TiltLabyrinth.apk |
+| Google Play | «Лабиринт: наклони и катай», package `com.maxsoft.tiltlabyrinth` (see «Google Play» below) |
+| Play upload key | `~/.android/tiltlabyrinth-upload.jks` (alias `tiltlabyrinth`, password in `tiltlabyrinth-upload.txt` beside it). Godot reads it from `.godot/export_credentials.cfg` (preset.0 APK and preset.2 Play). Never commit it. |
+| Privacy policy | `store/privacy.html` → https://maxims.top/labyrinth/privacy.html |
+| Server folder | `ubuntu@severance.lol:/var/www/maxims/labyrinth/` (nginx, HTTPS) |
 | Godot binary (Windows) | `C:\Users\msves\OneDrive\Рабочий стол\Godot_v4.7.2-stable_win64.exe` |
 | Android SDK / adb | `C:\Users\msves\AppData\Local\Android\Sdk` (`platform-tools/adb`) |
 | Local build output | `build/web/`, `build/android/` (git-ignored) |
@@ -23,6 +26,7 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 - `scripts/board.gd` turns the grid into walls, floor, holes and pockets (`POCKET_CHARS`).
 - `scripts/ball.gd` holds ball physics, capture and falling. Colours and symbols are in `INFO`.
 - `scripts/level_loader.gd` counts `levels/level_NN.json` files on its own, so a new file just shows up in the game.
+- Controls: on touch devices `Settings.control` is `"tilt"` or `"joystick"`. The «Управление» row (`Screens._add_control_choice`) sits in the main menu, the pause menu and settings. `TiltInput.wants_joystick()` shows the joystick when it is chosen or when the sensor is silent. `main.gd` then fits the board above the joystick (`_joystick_room`).
 - `scripts/autoload/`: `settings.gd` (user settings), `tilt_input.gd` (sensor, browser and keyboard input, calibration), `sfx.gd`, `progress.gd` (unlocks and stars).
 - `scripts/ui/`: `screens.gd` (menus, level select, a 5-column grid), `hud.gd`, `touch_joystick.gd`, `ui_theme.gd`, `star_row.gd`.
 - `Screens._root` must stay `MOUSE_FILTER_IGNORE`. It sits on layer 10 over the HUD, and if it blocks the mouse, the in-game buttons stop working.
@@ -42,11 +46,13 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 G="/c/Users/msves/OneDrive/Рабочий стол/Godot_v4.7.2-stable_win64.exe"
 "$G" --headless --quit-after 300                      # smoke test: look for script errors
 "$G" --headless --export-release "Web" build/web/index.html
-"$G" --headless --export-debug "Android" build/android/TiltLabyrinth.apk
-scp build/web/* build/android/TiltLabyrinth.apk ubuntu@severance.lol:/var/www/severance/2/
+"$G" --headless --export-release "Android" build/android/TiltLabyrinth.apk   # signed with the Play upload key
+"$G" --headless --export-release "Android Play" build/play/TiltLabyrinth.aab   # Google Play (Gradle, target SDK 36)
+scp build/web/* build/android/TiltLabyrinth.apk store/privacy.html ubuntu@severance.lol:/var/www/maxims/labyrinth/
 ```
 
-- The Android build is debug-signed (no release keystore), arm64 only.
+- Both Android builds are release builds signed with the Play upload key, arm64 only. Never ship `--export-debug` APKs, because Play Protect warns about them. Bump `version/code` in BOTH Android presets for every build.
+- The Gradle template lives in `android/build` (git-ignored). On a fresh checkout, add `--install-android-build-template` to the first Play export.
 - **Android tilt:** `project.godot` must keep `input_devices/sensors/enable_accelerometer` / `enable_gravity` / `enable_gyroscope = true`. Godot 4.3+ disables the sensors on Android by default, and the APK then reads zero tilt. No runtime permission is needed.
 - **Web PWA cache:** the export has a service worker (`progressive_web_app/enabled=true`). After a deploy, browsers run the old build once and switch to the new one on the next load. To test a deploy right away, unregister the service worker and clear `caches` in DevTools first.
 - **Web tilt** needs HTTPS. iOS also needs the in-page permission prompt, which `tilt_input.gd` handles through `JavaScriptBridge`.
@@ -55,4 +61,11 @@ scp build/web/* build/android/TiltLabyrinth.apk ubuntu@severance.lol:/var/www/se
 
 - Godot 4.7, Compatibility renderer, Jolt physics, 120 Hz physics ticks.
 - Don't commit `.godot/`, `build/` or `android/` (see `.gitignore`).
-- After changing gameplay, run the headless smoke test, rebuild both targets and redeploy. Then check https://severance.lol/2/ at phone size (450×800).
+- After changing gameplay, run the headless smoke test, rebuild both targets and redeploy. Then check https://maxims.top/labyrinth/ at phone size (450×800).
+
+## Google Play
+
+- Listing texts: `store/listing.md`. Graphics: `python tools/play_store.py` → `renders/play/` (icon 512, banner 1024×500, ru/en screenshots 1080×1920).
+- Declarations: free, no ads, no data collected, no login, no internet, 3+ / IARC «Для всех». The app icon and art are code-generated, not AI.
+- Update flow: bump `version/code` in both Android presets → export «Android Play» → Play Console → Production → Create release → upload the AAB → Next → Save → Publishing overview → send for review.
+- The built-in browser can't pick files. Serve the folder from a local CORS server on 127.0.0.1, fetch the file as a blob, set it on the page's `input[type=file]` through `DataTransfer`, then dispatch `change`.

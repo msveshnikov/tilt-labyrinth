@@ -1,10 +1,11 @@
 class_name TouchJoystick
 extends Control
-## On-screen joystick, shown on touch devices whose tilt sensor gives no data.
+## On-screen joystick for touch devices: shown when the player picks "Джойстик"
+## in the menu, or when the tilt sensor gives no data.
 ## Writes TiltInput.joystick_vector (same convention as get_tilt()).
 
-const RADIUS := 140.0
-const KNOB_RADIUS := 56.0
+const RADIUS := 115.0
+const KNOB_RADIUS := 48.0
 
 var _touch := -1
 var _knob := Vector2.ZERO

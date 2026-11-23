@@ -21,6 +21,8 @@ var playing := false
 
 var _level_token := 0
 var _first_play := true
+## Board is fitted above the on-screen joystick while it is in use.
+var _joystick_room := false
 
 
 func _ready() -> void:
@@ -52,7 +54,11 @@ func _process(delta: float) -> void:
 	if playing:
 		elapsed += delta
 	hud.set_time(elapsed)
-	hud.joystick.visible = playing and TiltInput.wants_joystick()
+	var want_joystick := TiltInput.wants_joystick()
+	hud.joystick.visible = playing and want_joystick
+	if want_joystick != _joystick_room:
+		_joystick_room = want_joystick
+		_fit_camera()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -209,7 +215,10 @@ func _fit_camera() -> void:
 	if board == null:
 		return
 	var vp := get_viewport().get_visible_rect().size
-	var area := Rect2(Vector2(12, TOP_MARGIN), vp - Vector2(24, TOP_MARGIN + BOTTOM_MARGIN))
+	var bottom := BOTTOM_MARGIN
+	if _joystick_room:
+		bottom += TouchJoystick.RADIUS * 2.0 + 16.0
+	var area := Rect2(Vector2(12, TOP_MARGIN), vp - Vector2(24, TOP_MARGIN + bottom))
 	var half := board.size() * 0.5 + Vector2.ONE * CAMERA_PADDING
 	var lift := sin(deg_to_rad(Settings.max_tilt_deg)) * maxf(half.x, half.y) * 0.6
 	var corners: Array[Vector3] = []

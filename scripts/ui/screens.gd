@@ -62,6 +62,7 @@ func show_main() -> void:
 	box.add_child(_text("Наклоняй доску и закати каждый шарик в лузу своего цвета", 28))
 	box.add_child(_spacer(20))
 	box.add_child(_btn("Играть", func(): play_pressed.emit(), 120, 44))
+	_add_control_choice(box)
 	box.add_child(_btn("Уровни", show_levels))
 	box.add_child(_btn("Настройки", func(): show_settings(show_main)))
 
@@ -101,6 +102,7 @@ func show_levels() -> void:
 func show_settings(back: Callable) -> void:
 	var box := _open("settings", 0.6, back)
 	box.add_child(_title("Настройки", 56))
+	_add_control_choice(box)
 	box.add_child(_slider("Чувствительность наклона", 0.5, 2.5, 0.1, Settings.sensitivity,
 		func(v): Settings.sensitivity = v, func(v): return "x%.1f" % v))
 	box.add_child(_slider("Макс. наклон доски", 10.0, 25.0, 1.0, Settings.max_tilt_deg,
@@ -130,6 +132,7 @@ func show_pause(level: int) -> void:
 	box.add_child(_text("Уровень %d" % level, 30))
 	box.add_child(_spacer(10))
 	box.add_child(_btn("Продолжить", func(): resume_pressed.emit(), 110, 40))
+	_add_control_choice(box)
 	box.add_child(_btn("Заново", func(): restart_pressed.emit()))
 	box.add_child(_btn("Настройки", func(): show_settings(show_pause.bind(level))))
 	box.add_child(_btn("Главное меню", func(): menu_pressed.emit()))
@@ -223,6 +226,37 @@ func _btn(text: String, action: Callable, height := 100, font_size := 36) -> But
 		_click()
 		action.call())
 	return b
+
+
+## "Управление: [Наклон] [Джойстик]" on phones and tablets (APK and browser alike).
+func _add_control_choice(box: VBoxContainer) -> void:
+	if not TiltInput.has_touch():
+		return
+	box.add_child(_text("Управление", 26))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	var group := ButtonGroup.new()
+	for opt in [["tilt", "Наклон"], ["joystick", "Джойстик"]]:
+		var b := Button.new()
+		b.text = opt[1]
+		b.toggle_mode = true
+		b.button_group = group
+		b.button_pressed = Settings.control == opt[0]
+		b.custom_minimum_size.y = 90
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.focus_mode = Control.FOCUS_NONE
+		b.add_theme_font_size_override("font_size", 30)
+		var mode: String = opt[0]
+		b.toggled.connect(func(v: bool):
+			if not v or Settings.control == mode:
+				return
+			_click()
+			Settings.control = mode
+			Settings.save_settings()
+			if mode == "tilt":
+				TiltInput.request_calibration())
+		row.add_child(b)
+	box.add_child(row)
 
 
 func _toggle(text: String, on: bool, setter: Callable) -> Button:
