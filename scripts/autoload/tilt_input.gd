@@ -21,6 +21,8 @@ const MOUSE_RANGE := 160.0
 var source := "none"
 var sensor_backend := "none"
 var joystick_vector := Vector2.ZERO
+## Store screenshots on a PC: behave like a touch device.
+var force_touch := false
 var raw_gravity := Vector3.ZERO
 
 var _tilt := Vector2.ZERO
@@ -84,7 +86,7 @@ func is_sensor_active() -> bool:
 
 ## Phone or tablet (native or browser): the player can choose tilt or joystick.
 func has_touch() -> bool:
-	return DisplayServer.is_touchscreen_available()
+	return force_touch or DisplayServer.is_touchscreen_available()
 
 
 ## The player picked the on-screen joystick instead of tilting the phone.

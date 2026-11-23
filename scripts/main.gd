@@ -48,6 +48,10 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_fit_camera)
 	load_level(Progress.next_level(LevelLoader.count()))
 	show_menu()
+	if "--storeshots" in OS.get_cmdline_user_args():
+		var shots: Node = load("res://scripts/store_shots.gd").new()
+		add_child(shots)
+		shots.run(self)
 
 
 func _process(delta: float) -> void:
