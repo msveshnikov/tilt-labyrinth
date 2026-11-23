@@ -10,7 +10,7 @@ Notes for coding agents working on **Tilt Labyrinth**, a Godot 4.7 tilt-maze gam
 | Git repo | https://github.com/msveshnikov/tilt-labyrinth (branch `main`) |
 | Live web build | https://maxims.top/labyrinth/ |
 | Android APK (download) | https://maxims.top/labyrinth/TiltLabyrinth.apk |
-| Google Play | «Лабиринт: наклони и катай», package `com.maxsoft.tiltlabyrinth` (see «Google Play» below) |
+| Google Play | «Лабиринт: наклони и катай», package `com.maxsoft.tiltlabyrinth`, Play Console app id 4974986460613496436 (dev 5957945224586801272). Created 2026-11-23; production release 2 (1.1) to 178 countries plus ru-RU/en-US listings sent for review on 2026-11-23 |
 | Play upload key | `~/.android/tiltlabyrinth-upload.jks` (alias `tiltlabyrinth`, password in `tiltlabyrinth-upload.txt` beside it). Godot reads it from `.godot/export_credentials.cfg` (preset.0 APK and preset.2 Play). Never commit it. |
 | Privacy policy | `store/privacy.html` → https://maxims.top/labyrinth/privacy.html |
 | Server folder | `ubuntu@severance.lol:/var/www/maxims/labyrinth/` (nginx, HTTPS) |
@@ -66,6 +66,8 @@ scp build/web/* build/android/TiltLabyrinth.apk store/privacy.html ubuntu@severa
 ## Google Play
 
 - Listing texts: `store/listing.md`. Graphics: `python tools/play_store.py` → `renders/play/` (icon 512, banner 1024×500, ru/en screenshots 1080×1920).
-- Declarations: free, no ads, no data collected, no login, no internet, 3+ / IARC «Для всех». The app icon and art are code-generated, not AI.
+- Declarations: free game, category «Головоломки», no ads, no data collected, no login, no ad ID, no finance or health features, target audience 13+, IARC «Для всех» / PEGI 3, assets not marked as AI (game renders and code-generated icon). Contact: developer email + https://maxims.top/labyrinth/.
+- Play warns that `android.hardware.screen.portrait` is required (portrait lock). For a tilt maze this is intended, so answer «Продолжить все равно».
+- Store screenshots: `-- --storeshots` renders 7 shots at 1080x1920 (a borderless window, because a captioned one is clamped to the screen). The ru-RU listing holds them; en-US inherits them and only has its own banner.
 - Update flow: bump `version/code` in both Android presets → export «Android Play» → Play Console → Production → Create release → upload the AAB → Next → Save → Publishing overview → send for review.
 - The built-in browser can't pick files. Serve the folder from a local CORS server on 127.0.0.1, fetch the file as a blob, set it on the page's `input[type=file]` through `DataTransfer`, then dispatch `change`.
