@@ -51,6 +51,6 @@ func _release() -> void:
 
 func _draw() -> void:
 	var c := size * 0.5
-	draw_circle(c, RADIUS, Color(1, 1, 1, 0.12))
-	draw_arc(c, RADIUS, 0, TAU, 48, Color(1, 1, 1, 0.45), 4.0, true)
-	draw_circle(c + _knob, KNOB_RADIUS, Color(1, 1, 1, 0.55))
+	draw_circle(c, RADIUS, Color(UiTheme.SURFACE, 0.8))
+	draw_arc(c, RADIUS, 0, TAU, 48, UiTheme.BORDER, 4.0, true)
+	draw_circle(c + _knob, KNOB_RADIUS, UiTheme.ACCENT)

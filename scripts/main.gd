@@ -44,6 +44,7 @@ func _ready() -> void:
 	screens.restart_pressed.connect(restart_level)
 	screens.next_pressed.connect(func(): start_level(level_index + 1))
 	screens.menu_pressed.connect(show_menu)
+	Settings.language_changed.connect(func(): hud.set_level(level_index, level_data.get("name", "")))
 
 	get_viewport().size_changed.connect(_fit_camera)
 	load_level(Progress.next_level(LevelLoader.count()))
@@ -72,7 +73,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		restart_level()
 	elif playing and event.is_action_pressed("calibrate"):
 		TiltInput.calibrate()
-		hud.toast("Наклон выровнен")
+		hud.toast(tr("Наклон выровнен"))
 
 
 func _notification(what: int) -> void:
@@ -89,11 +90,12 @@ func show_menu() -> void:
 	get_tree().paused = true
 	hud.visible = false
 	screens.show_main()
+	_fit_camera()
 
 
 func start_level(index: int) -> void:
-	load_level(index)
 	screens.hide_all()
+	load_level(index)
 	hud.visible = true
 	playing = true
 	get_tree().paused = false
@@ -190,7 +192,7 @@ func _on_ball_captured(_ball: Ball) -> void:
 func _build_world() -> void:
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("#27324d")
+	env.background_color = UiTheme.BACKDROP
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("#c3cfe8")
 	env.ambient_light_energy = 0.45
@@ -222,7 +224,11 @@ func _fit_camera() -> void:
 	var bottom := BOTTOM_MARGIN
 	if _joystick_room:
 		bottom += TouchJoystick.RADIUS * 2.0 + 16.0
-	var area := Rect2(Vector2(12, TOP_MARGIN), vp - Vector2(24, TOP_MARGIN + bottom))
+	var top := TOP_MARGIN
+	if screens and screens.current == "main":
+		top = 220.0
+		bottom = 442.0 if TiltInput.has_touch() else 320.0
+	var area := Rect2(Vector2(24, top), vp - Vector2(48, top + bottom))
 	var half := board.size() * 0.5 + Vector2.ONE * CAMERA_PADDING
 	var lift := sin(deg_to_rad(Settings.max_tilt_deg)) * maxf(half.x, half.y) * 0.6
 	var corners: Array[Vector3] = []

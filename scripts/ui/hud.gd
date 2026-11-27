@@ -7,12 +7,15 @@ signal pause_pressed
 signal restart_pressed
 signal menu_pressed
 
-const MARGIN := 20
+const MARGIN := 24
 
 var level_label: Label
 var time_label: Label
 var joystick: TouchJoystick
 var _toast: Label
+var _pause: Button
+var _restart: Button
+var _menu: Button
 
 
 func _ready() -> void:
@@ -22,16 +25,21 @@ func _ready() -> void:
 	root.theme = UiTheme.get_theme()
 	add_child(root)
 
+	var status := PanelContainer.new()
+	status.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
+	status.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(status)
 	var top := HBoxContainer.new()
-	top.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
+	top.add_theme_constant_override("separation", 16)
 	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(top)
-	level_label = _label(36)
+	status.add_child(top)
+	level_label = _label(30)
 	level_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	level_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	level_label.clip_text = true
 	top.add_child(level_label)
-	time_label = _label(40)
+	time_label = _label(34)
+	time_label.add_theme_color_override("font_color", UiTheme.ACCENT)
 	top.add_child(time_label)
 
 	var bottom := VBoxContainer.new()
@@ -49,9 +57,13 @@ func _ready() -> void:
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 14)
 	bottom.add_child(buttons)
-	buttons.add_child(_button("Пауза", pause_pressed.emit))
-	buttons.add_child(_button("Заново", restart_pressed.emit))
-	buttons.add_child(_button("Меню", menu_pressed.emit))
+	_pause = _button(pause_pressed.emit)
+	_restart = _button(restart_pressed.emit)
+	_menu = _button(menu_pressed.emit)
+	for button in [_pause, _restart, _menu]:
+		buttons.add_child(button)
+	_update_buttons()
+	Settings.language_changed.connect(_update_buttons)
 
 	_toast = _label(32)
 	_toast.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
@@ -63,7 +75,7 @@ func _ready() -> void:
 
 
 func set_level(index: int, title: String) -> void:
-	level_label.text = "%d. %s" % [index, title] if title else "Уровень %d" % index
+	level_label.text = "%02d  ·  %s" % [index, tr(title)] if title else tr("Уровень %d") % index
 
 
 func set_time(seconds: float) -> void:
@@ -89,11 +101,16 @@ func _label(font_size: int) -> Label:
 	return l
 
 
-func _button(text: String, on_press: Callable) -> Button:
+func _update_buttons() -> void:
+	_pause.text = tr("Пауза")
+	_restart.text = tr("Заново")
+	_menu.text = tr("Меню")
+
+
+func _button(on_press: Callable) -> Button:
 	var b := Button.new()
-	b.text = text
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	b.custom_minimum_size = Vector2(0, 96)
+	b.custom_minimum_size = Vector2(0, 82)
 	b.focus_mode = Control.FOCUS_NONE
 	b.add_theme_font_size_override("font_size", 28)
 	b.add_theme_constant_override("h_separation", 0)

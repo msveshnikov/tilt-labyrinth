@@ -1,0 +1,229 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Лабиринт"
+msgstr "Tilt Labyrinth"
+
+msgid "Наклоняй доску и закати шарики в лунки своего цвета"
+msgstr "Tilt the board. Roll each ball into its matching pocket."
+
+msgid "Играть"
+msgstr "Play"
+
+msgid "Продолжить игру"
+msgstr "Continue"
+
+msgid "Уровни"
+msgstr "Levels"
+
+msgid "Настройки"
+msgstr "Settings"
+
+msgid "Назад"
+msgstr "Back"
+
+msgid "Уровень %d из %d"
+msgstr "Level %d of %d"
+
+msgid "Пройдено %d из %d"
+msgstr "%d of %d completed"
+
+msgid "Уровень %d"
+msgstr "Level %d"
+
+msgid "Чувствительность наклона"
+msgstr "Tilt sensitivity"
+
+msgid "Макс. наклон доски"
+msgstr "Max board tilt"
+
+msgid "Инверсия X"
+msgstr "Invert X"
+
+msgid "Инверсия Y"
+msgstr "Invert Y"
+
+msgid "Звук"
+msgstr "Sound"
+
+msgid "Вибрация"
+msgstr "Vibration"
+
+msgid "Выровнять наклон"
+msgstr "Calibrate tilt"
+
+msgid "Держи телефон ровно"
+msgstr "Hold your phone steady"
+
+msgid "Датчик наклона готов"
+msgstr "Tilt sensor ready"
+
+msgid "Нет сигнала датчика"
+msgstr "No tilt sensor signal"
+
+msgid "Готово"
+msgstr "Done"
+
+msgid "Пауза"
+msgstr "Pause"
+
+msgid "Продолжить"
+msgstr "Resume"
+
+msgid "Заново"
+msgstr "Restart"
+
+msgid "Главное меню"
+msgstr "Main menu"
+
+msgid "Уровень пройден!"
+msgstr "Level complete!"
+
+msgid "Время"
+msgstr "Time"
+
+msgid "Рекорд"
+msgstr "Best time"
+
+msgid "Новый рекорд!"
+msgstr "New best!"
+
+msgid "Дальше"
+msgstr "Next level"
+
+msgid "Это был последний уровень!"
+msgstr "You finished every level!"
+
+msgid "Ещё раз"
+msgstr "Play again"
+
+msgid "Управление"
+msgstr "Controls"
+
+msgid "Наклон"
+msgstr "Tilt"
+
+msgid "Джойстик"
+msgstr "Joystick"
+
+msgid "вкл"
+msgstr "On"
+
+msgid "выкл"
+msgstr "Off"
+
+msgid "Меню"
+msgstr "Menu"
+
+msgid "Игра на паузе"
+msgstr "Paused"
+
+msgid "Стрелки, WASD или перетаскивание мышью"
+msgstr "Use the arrow keys, WASD or drag with the mouse."
+
+msgid "Наклон выровнен"
+msgstr "Tilt calibrated"
+
+msgid "Язык"
+msgstr "Language"
+
+msgid "Уровень %d закрыт"
+msgstr "Level %d locked"
+
+msgid "Первые шаги"
+msgstr "First Steps"
+
+msgid "Извилистая тропа"
+msgstr "Winding Path"
+
+msgid "Осторожно, ямы"
+msgstr "Mind the Holes"
+
+msgid "Двое"
+msgstr "A Pair"
+
+msgid "Разные пути"
+msgstr "Separate Paths"
+
+msgid "Ловушки"
+msgstr "Traps"
+
+msgid "Большой лабиринт"
+msgstr "Big Maze"
+
+msgid "Трио"
+msgstr "Trio"
+
+msgid "Три цвета"
+msgstr "Three Colors"
+
+msgid "Мастер наклона"
+msgstr "Tilt Master"
+
+msgid "Квартет"
+msgstr "Quartet"
+
+msgid "Финал"
+msgstr "The Finale"
+
+msgid "Новый круг"
+msgstr "A New Round"
+
+msgid "Длинный путь"
+msgstr "The Long Way"
+
+msgid "Минное поле"
+msgstr "Minefield"
+
+msgid "Тройка"
+msgstr "Three of a Kind"
+
+msgid "Узкие места"
+msgstr "Tight Corners"
+
+msgid "Пропасти"
+msgstr "Chasms"
+
+msgid "Четыре стороны"
+msgstr "Four Directions"
+
+msgid "Перекрёстки"
+msgstr "Crossroads"
+
+msgid "Тупики"
+msgstr "Dead Ends"
+
+msgid "Решето"
+msgstr "Swiss Cheese"
+
+msgid "Великий лабиринт"
+msgstr "The Great Maze"
+
+msgid "Хитрый квартет"
+msgstr "Tricky Quartet"
+
+msgid "По краю"
+msgstr "On the Edge"
+
+msgid "Бездна"
+msgstr "The Abyss"
+
+msgid "Терпение"
+msgstr "Patience"
+
+msgid "Ювелир"
+msgstr "Precision"
+
+msgid "Кошмар"
+msgstr "Nightmare"
+
+msgid "Испытание"
+msgstr "The Trial"
+
+msgid "Предфинал"
+msgstr "The Penultimate Test"
+
+msgid "Гранд-финал"
+msgstr "Grand Finale"
